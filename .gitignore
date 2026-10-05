@@ -1,0 +1,23 @@
+# Java Maven build outputs
+backend/target/
+backend/*.jar
+backend/*.war
+
+# Node dependencies & Vite build outputs
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Uploads directory
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+# Antigravity temporary files
+scratch/
