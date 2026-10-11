@@ -60,8 +60,8 @@ public class DataSourceConfig {
                 String host = uri.getHost();
                 int port = uri.getPort() > 0 ? uri.getPort() : 3306;
                 String path = uri.getPath();
-                if (!StringUtils.hasText(path) || "/".equals(path) || "/sys".equalsIgnoreCase(path)) {
-                    path = "/complaint_management_db";
+                if (!StringUtils.hasText(path) || "/".equals(path)) {
+                    path = "/sys";
                 }
                 String query = uri.getQuery();
 
