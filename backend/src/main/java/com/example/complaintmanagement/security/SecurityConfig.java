@@ -63,7 +63,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
 
                 // ✅ PUBLIC routes
-                .requestMatchers("/api/health").permitAll()
+                .requestMatchers("/", "/api", "/api/health").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/departments").permitAll()

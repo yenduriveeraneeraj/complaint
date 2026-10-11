@@ -12,6 +12,11 @@
     "@vitejs/plugin-react": "^4.7.0",
     "vite": "^8.3.0"
   },
+  "overrides": {
+    "@vitejs/plugin-react": {
+      "vite": "$vite"
+    }
+  },
   "dependencies": {
     "@stomp/stompjs": "^7.3.0",
     "@tanstack/react-query": "^5.104.1",
