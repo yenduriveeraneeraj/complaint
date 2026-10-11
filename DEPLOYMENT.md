@@ -56,23 +56,36 @@ npx serve -s frontend/dist -l 5173
 
 ---
 
-## ☁️ Option 3: Cloud Deployment (Render / Railway / AWS / Heroku)
+## ☁️ Option 3: Production Free Cloud Deployment (Vercel + Render + TiDB Cloud)
 
-### Backend Deployment (Spring Boot):
-1. Push project repository to GitHub/GitLab.
-2. Connect repository to **Render**, **Railway**, or **AWS Elastic Beanstalk**.
-3. Set **Build Command**: `./mvnw package -DskipTests` (or use [`backend/Dockerfile`](file:///d:/online%20management%20system/backend/Dockerfile)).
-4. Set **Start Command**: `java -jar target/complaint-management-1.0.0.jar`.
-5. Set Environment Variables:
-   - `SPRING_DATASOURCE_URL`: `jdbc:mysql://<your-db-host>:3306/complaint_management_db`
-   - `SPRING_DATASOURCE_USERNAME`: `<db-user>`
-   - `SPRING_DATASOURCE_PASSWORD`: `<db-password>`
+### 1. Cloud Database (TiDB Cloud Serverless MySQL)
+- Create a free cluster on [TiDB Cloud](https://tidbcloud.com) (5 GB free forever, MySQL 8.0 protocol).
+- Note your **Host**, **Port** (usually `4000`), **Username**, and **Password**.
+- JDBC URL format:
+  ```text
+  jdbc:mysql://<HOST>:<PORT>/complaint_management_db?createDatabaseIfNotExist=true&useSSL=true&allowPublicKeyRetrieval=true
+  ```
 
-### Frontend Deployment (React):
-1. Connect repository to **Vite / Vercel / Netlify**.
-2. Set **Root Directory**: `frontend`.
-3. Set **Build Command**: `npm run build`.
-4. Set **Publish Directory**: `dist`.
+### 2. Backend API Deployment (Render Web Service)
+- Connect repository [`complaint-backend`](https://github.com/yenduriveeraneeraj/complaint-backend) or [`complaint`](https://github.com/yenduriveeraneeraj/complaint) (Root Directory: `backend`) to [Render](https://dashboard.render.com).
+- **Environment**: `Docker` (uses `Dockerfile`).
+- **Health Check Path**: `/api/health`.
+- Set Environment Variables:
+  - `SPRING_DATASOURCE_URL`: `jdbc:mysql://<HOST>:<PORT>/complaint_management_db?createDatabaseIfNotExist=true&useSSL=true`
+  - `SPRING_DATASOURCE_USERNAME`: `<your-db-user>`
+  - `SPRING_DATASOURCE_PASSWORD`: `<your-db-password>`
+  - `SPRING_JPA_HIBERNATE_DDL_AUTO`: `update`
+  - `APP_CORS_ALLOWED_ORIGINS`: `*`
+  - `JWT_SECRET`: `MySecretKeyForComplaintManagementSystemJWT2026`
+  - `MAIL_ENABLED`: `false`
+
+### 3. Frontend Web Deployment (Vercel)
+- Connect repository [`complaint-frontend`](https://github.com/yenduriveeraneeraj/complaint-frontend) or [`complaint`](https://github.com/yenduriveeraneeraj/complaint) (Root Directory: `frontend`) to [Vercel](https://vercel.com).
+- **Framework Preset**: `Vite`
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- Set Environment Variable:
+  - `VITE_API_URL`: `https://<your-render-backend-name>.onrender.com/api`
 
 ---
 
